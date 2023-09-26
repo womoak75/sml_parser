@@ -80,7 +80,7 @@ void pushListBuffer(unsigned char byte)
 
 void reduceList()
 {
-  if (currentLevel >= 0 && nodes[currentLevel] > 0)
+  if ((currentLevel > 0 || currentLevel == 0) && nodes[currentLevel] > 0)
     nodes[currentLevel]--;
 }
 
@@ -171,7 +171,7 @@ void checkMagicByte(unsigned char &byte)
       // Datatype Octet String
       setState(SML_HDATA, (byte & 0x0F) << 4);
     }
-    else if (byte >= 0xF0 && byte <= 0xFF) {
+    else if (byte >= 0xF0 && (byte < 0xFF || byte == 0xFF)) {
       /* Datatype List of ...*/
       setState(SML_LISTEXTENDED, (byte & 0x0F) << 4);
     }
